@@ -55,6 +55,13 @@ Version History
   legacy distutils `Version` classes.
 * Relax run-time libzstd version checking in C extension from exactly 1.5.7
   to >=1.5.6. (#254, #267)
+* C extension types now (correctly) declare their fully qualified type names
+  as ``zstandard.backend_c.*`` versus ``zstd.*`` before. The names have been
+  subtly broken for years. We believe the only practical exposure to this change
+  is via pickling (possibly encountered when using the ``multiprocessing`` or
+  ``concurrent.futures`` packages), which would fail to pickle types like
+  ``ZstdError`` before since the fully qualified type name referenced an
+  incorrect and likely missing package (``zstd``). (#248)
 
 0.24.0 (released 2025-08-17)
 ============================
